@@ -19,8 +19,14 @@
 }
 
 /* For the picture of the gift */
-.giftpic {
-    height: 350px;
+.mascot {
+    height: 270px;
+    left: 50px;
+    position: relative;
+}
+
+.text {
+    padding-right: 40px;
 }
 
 /* Shift the text down 1cm */
