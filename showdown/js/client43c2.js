@@ -976,7 +976,7 @@
 		_addRoom: function(id, type) {
 			if (this.rooms[id]) return this.rooms[id];
 
-			var el = $('<div class="ps-room" style="display:none"></div>').appendTo('body');
+			var el = $('<div class="ps-room" style="display:none"></div>').appendTo('#simulator');
 			var typeName = '';
 			if (typeof type === 'string') {
 				typeName = type;
