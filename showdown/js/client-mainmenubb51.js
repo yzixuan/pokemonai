@@ -735,7 +735,7 @@
 		type: 'semimodal',
 		initialize: function() {
 			var buf = '';
-			buf += '<p style="text-align:center"><img src="pokemonshowdownbeta.png" alt="Pok&eacute;mon Showdown (beta)" /></p>';
+			buf += '<p style="text-align:center"><img src="../showdown/pokemonshowdownbeta.png" alt="Pok&eacute;mon Showdown (beta)" /></p>';
 			if (Config.version) buf += '<p style="text-align:center;color:#555555"><small>Version <strong>'+Config.version+'</strong></small></p>';
 			buf += '<h2>Owner</h2>';
 			buf += '<ul><li><p><a href="http://guangcongluo.com/" target="_blank" class="subtle"><strong>Guangcong Luo</strong> [Zarel]</a> <small>&ndash; Development, Design</small></p></li></ul>';
