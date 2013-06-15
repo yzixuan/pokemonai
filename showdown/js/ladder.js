@@ -49,7 +49,6 @@ function Ladder(id, elem)
 			}
 			selfR.ladderElem.html('<div><p>See a user\'s ranking with <code>/ranking <em>username</em></code></p>' + 
 				//'<p><strong style="color:red">I\'m really really sorry, but as a warning: we\'re going to reset the ladder again soon to fix some more ladder bugs.</strong></p>' +
- 				'<p>(btw if you couldn\'t tell the ladder screens aren\'t done yet; they\'ll look nicer than this once I\'m done.)</p><ul>' +
 				ladderButtons +
 				'</ul></div>');
 		} else {
