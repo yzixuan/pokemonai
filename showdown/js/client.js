@@ -484,7 +484,7 @@
 				};
 			})());
 			var $iframe = $(
-				'<iframe src="//play.pokemonshowdown.com/crossdomain.php?host=' +
+				'<iframe src="../crossdomain.php?host=' +
 				encodeURIComponent(document.location.hostname) +
 				'&path=' + encodeURIComponent(document.location.pathname.substr(1)) +
 				'" style="display: none;"></iframe>'
