@@ -506,7 +506,7 @@ button.closebutton i
 	height: 80px;
 
 	border: 1px solid #F2F2F2;
-	background: transparent url(//play.pokemonshowdown.com/sprites/trainers-sheet.png) no-repeat scroll 0px 0px;
+	background: transparent url(../sprites/trainers-sheet.png) no-repeat scroll 0px 0px;
 	border-radius: 4px;
 	box-shadow: none;
 	cursor: pointer;
@@ -577,7 +577,7 @@ button.closebutton i
 	cursor: pointer;
 	width: 15px;
 	height: 15px;
-	background: transparent url(//play.pokemonshowdown.com/fx/closebuttonsheet.png) no-repeat scroll 0px -16px;
+	background: transparent url(../fx/closebuttonsheet.png) no-repeat scroll 0px -16px;
 	z-index: 10;
 }
 #leftbar div .close2
@@ -594,7 +594,7 @@ button.closebutton i
 }
 #leftbar div .close:hover
 {
-	background: transparent url(//play.pokemonshowdown.com/fx/closebuttonsheet.png) no-repeat scroll 0px 0px;
+	background: transparent url(../fx/closebuttonsheet.png) no-repeat scroll 0px 0px;
 }
 #leftbar small
 {
@@ -676,7 +676,7 @@ button.closebutton i
 	border-right: 0;
 	height: auto;
 	width: auto;
-	background: #edf1f4 url(//play.pokemonshowdown.com/data/meloettabg.png) no-repeat scroll right bottom;
+	background: #edf1f4 url(../data/meloettabg.png) no-repeat scroll right bottom;
 	overflow-x: hidden;
 }
 .battle-log

@@ -8,10 +8,10 @@
 		<link rel="stylesheet" href="/style/sim-types.css" />
 		<link rel="stylesheet" href="/style/battle.css" />
 		<link rel="stylesheet" href="/style/replayer.css" />
-		<script src="/js/jquery-2.0.0.min.js"></script>
-		<script src="/js/autoresize.jquery.min.js"></script>
-		<script src="/js/jquery-cookie.js"></script>
-		<script src="/js/jquery.json-2.3.min.js"></script>
+		<script src="/js/lib/jquery-2.0.0.min.js"></script>
+		<script src="/js/lib/autoresize.jquery.min.js"></script>
+		<script src="/js/lib/jquery-cookie.js"></script>
+		<script src="/js/lib/jquery.json-2.3.min.js"></script>
 		<script src="/data/pokedex-mini.js"></script>
 		
 		<script>var exports=this</script>
