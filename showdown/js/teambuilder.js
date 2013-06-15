@@ -126,7 +126,7 @@ function Teambuilder(id, elem)
 				}
 				if (!selfR.activeTeam.team.length)
 				{
-					text += '<li><em>you have no pokemon lol</em></li>';
+					text += '<li><em>You have no pokemon.</em></li>';
 				}
 				for (i=0; i<selfR.activeTeam.team.length; i++)
 				{
@@ -263,8 +263,7 @@ function Teambuilder(id, elem)
 		}
 		else
 		{
-			text = '<p>lol zarel this is a horrible teambuilder</p>'
-			text += '<p>i know stfu im not done with it</p>'
+			text = '<p>Error loading.</p>'
 			text += '<ul>';
 			if (!teams.length)
 			{
@@ -272,7 +271,7 @@ function Teambuilder(id, elem)
 				{
 					text += '<li><button onclick="rooms[\''+selfR.id+'\'].formUndoDelete('+deletedTeamLoc+'); return false"><i class="icon-undo"></i> Undo Delete</button></li>';
 				}
-				text += '<li><em>you don\'t have any teams lol</em></li>';
+				text += '<li><em>You don't have any teams.</em></li>';
 			}
 			else for (var i=0; i<teams.length+1; i++)
 			{
