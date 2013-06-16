@@ -430,7 +430,7 @@
 						Config.server = data.server;
 						if (Config.server.registered) {
 							var $link = $('<link rel="stylesheet" ' +
-								'href="//play.pokemonshowdown.com/customcss.php?server=' +
+								'href="../customcss.php?server=' +
 								encodeURIComponent(Config.server.id) + '" />');
 							$('head').append($link);
 						}
