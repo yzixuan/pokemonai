@@ -84,6 +84,7 @@
 		 *     triggered if the login server did not return a response
 		 */
 		finishRename: function(name, assertion) {
+			console.log("finishrename");
 			if (assertion === ';') {
 				this.trigger('login:authrequired', name);
 			} else if (assertion.substr(0, 2) === ';;') {
@@ -109,9 +110,12 @@
 						'&challengekeyid=' + encodeURIComponent(this.challengekeyid) +
 						'&challenge=' + encodeURIComponent(this.challenge);
 				var self = this;
-				$.get(query, function(data) {
+				
+				window.promise = $.get(query, function(data) {
+					console.log("returned rename query");
 					self.finishRename(name, data);
 				});
+				console.log("rename");
 			} else {
 				app.send('/trn ' + name);
 			}
@@ -715,7 +719,7 @@
 		 * Receive from sim server
 		 */
 		receive: function(data) {
-		console.log("receive function called");
+		//console.log("receive function called");
 			var roomid = '';
 			if (data.substr(0,1) === '>') {
 				var nlIndex = data.indexOf('\n');
