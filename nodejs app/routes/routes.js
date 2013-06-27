@@ -87,7 +87,16 @@ module.exports = {
   signup: function(req, res) {
     library.createUser(req.body.username, req.body.email, req.body.password, function(err, user) {
       console.log(user);
-      res.redirect('/profile');
+    library.authenticate(req.body.username, req.body.password, function(err, id) {
+      if (id) {
+        req.session._id = id;
+        res.cookie('username', id.username, {username: id.username});
+        res.cookie('password', id.password, {password: id.password});
+        res.redirect('/profile');
+      }
+      else
+        res.redirect('/loginError');
+    });       
     });
   }
 }
