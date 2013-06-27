@@ -30,7 +30,7 @@
 			buf += '<div class="menugroup"><p><button class="button" name="roomlist">Watch a battle</button></p></div>';
 
 			buf += '<div class="menugroup"><p><button class="button" name="joinRoom" value="teambuilder">Teambuilder</button></p>';
-			buf += '<p><button class="button" name="joinRoom" value="ladder">Ladder</button></p>';
+			//buf += '<p><button class="button" name="joinRoom" value="ladder">Ladder</button></p>';
 			buf += '<p><button class="button" name="credits">Credits</button></p></div></div></div>';
 
 			// right menu
