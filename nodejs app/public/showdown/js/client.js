@@ -84,7 +84,6 @@
 		 *     triggered if the login server did not return a response
 		 */
 		finishRename: function(name, assertion) {
-			console.log("finishrename");
 			if (assertion === ';') {
 				this.trigger('login:authrequired', name);
 			} else if (assertion.substr(0, 2) === ';;') {
@@ -112,10 +111,8 @@
 				var self = this;
 				
 				window.promise = $.get(query, function(data) {
-					console.log("returned rename query");
 					self.finishRename(name, data);
 				});
-				console.log("rename");
 			} else {
 				app.send('/trn ' + name);
 			}
@@ -237,6 +234,11 @@
 
 			this.topbar = new Topbar({el: $('#header')});
 			this.addRoom('');
+			//added
+			if (!this.down && $(window).width() >= 916) {
+				this.addRoom('lobby');
+			}
+			//end add
 
 			var self = this;
 
@@ -328,13 +330,11 @@
 		 *     triggered if the SockJS socket closes
 		 */
 		initializeConnection: function() {
-			console.log("initialise connection called");
 			if ((document.location.hostname !== Config.origindomain) && !Config.testclient) {
 				// Handle *.psim.us.
-				console.log("initialise cross domain connection");
 				return this.initializeCrossDomainConnection();
 			}
-			if (document.location.protocol === 'https:') {
+			else if (document.location.protocol === 'https:') {
 				if (!$.cookie('showdown_ssl')) {
 					// Never used HTTPS before, so we have to copy over the
 					// HTTP origin localStorage. We have to redirect to the
@@ -411,18 +411,15 @@
 			// crossdomain.php on play.pokemonshowdown.com.
 			var self = this;
 			$(window).on('message', (function() {
-				console.log("URI function");
 				var origin;
 				var callbacks = {};
 				var callbackIdx = 0;
 				return function($e) {
-					console.log("$e");
 					var e = $e.originalEvent;
 					if ((e.origin === 'http://' + Config.origindomain) ||
 							(e.origin === 'https://' + Config.origindomain)) {
 						origin = e.origin;
 					} else {
-						console.log("GTFO");
 						return; // unauthorised source origin
 					}
 					var data = $.parseJSON(e.data);
@@ -439,11 +436,17 @@
 							$('head').append($link);
 						}
 						// persistent username
-						self.user.setPersistentName = function() {
+						/*self.user.setPersistentName = function() {
 							postCrossDomainMessage({username: this.get('name')});
+						};*/
+						//try
+						self.user.setPersistentName = function(name) {
+							postCrossDomainMessage({
+								username: ((name !== undefined) ? name : this.get('name'))
+							});
 						};
+						// end try
 						// ajax requests
-						console.log("ajax requests");
 						$.get = function(uri, callback, type) {
 							var idx = callbackIdx++;
 							callbacks[idx] = callback;
@@ -501,6 +504,8 @@
 		 * Don't call this function directly.
 		 */
 		connect: function() {
+			if (this.down) return;
+			
 			var self = this;
 			var constructSocket = function() {
 				var protocol = (Config.server.port === 443) ? 'https' : 'http';
@@ -638,10 +643,6 @@
 					self.send('{"room":"lobby","nojoin":1,"type":"join"}', true);
 				}
 
-				if ($(window).width() >= 916) {
-					self.send('/join lobby');
-				}
-
 				var avatar = Tools.prefs('avatar');
 				if (avatar) {
 					// This will be compatible even with servers that don't support
@@ -697,7 +698,12 @@
 			};
 		},
 		dispatchFragment: function(fragment) {
-			this.tryJoinRoom(fragment||'');
+			//this.tryJoinRoom(fragment||'');
+			//try
+			if (!fragment) fragment = '';
+			if (this.initialFragment === undefined) this.initialFragment = fragment;
+			this.tryJoinRoom(fragment);
+			//end try
 		},
 		/**
 		 * Send to sim server
@@ -719,7 +725,7 @@
 		 * Receive from sim server
 		 */
 		receive: function(data) {
-		//console.log("receive function called");
+
 			var roomid = '';
 			if (data.substr(0,1) === '>') {
 				var nlIndex = data.indexOf('\n');
@@ -727,6 +733,7 @@
 				roomid = data.substr(1,nlIndex-1);
 				data = data.substr(nlIndex+1);
 			}
+			
 			if (roomid) {
 				if (data.substr(0,6) === '|init|') {
 					var roomType = data.substr(6);
@@ -744,6 +751,13 @@
 				}
 				return;
 			}
+			
+			// Since roomid is blank, it could be either a global message or
+			// a lobby message. (For bandwidth reasons, lobby messages can
+			// have blank roomids.)
+
+			// If it starts with a messagetype in the global messagetype
+			// list, we'll assume global; otherwise, we'll assume lobby.
 
 			var parts;
 			if (data.charAt(0) === '|') {
@@ -781,6 +795,9 @@
 					avatar: parts[3]
 				});
 				this.user.setPersistentName(named ? name : null);
+				if (named) {
+					this.trigger('init:choosename');
+				}
 				break;
 
 			case 'nametaken':
@@ -793,15 +810,25 @@
 				break;
 
 			case 'updatechallenges':
-				if (self.rooms['']) {
+				/*if (self.rooms['']) {
 					self.rooms[''].updateChallenges($.parseJSON(data.substr(18)));
+				}*/
+				// try
+				if (this.rooms['']) {
+					this.rooms[''].updateChallenges($.parseJSON(data.substr(18)));
 				}
+				// end try
 				break;
 
 			case 'updatesearch':
-				if (self.rooms['']) {
+				/*if (self.rooms['']) {
 					self.rooms[''].updateSearch($.parseJSON(data.substr(14)));
+				}*/
+				//try
+				if (this.rooms['']) {
+					this.rooms[''].updateSearch($.parseJSON(data.substr(14)));
 				}
+				//end try
 				break;
 
 			case 'popup':
