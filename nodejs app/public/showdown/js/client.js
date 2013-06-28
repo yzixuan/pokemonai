@@ -64,9 +64,11 @@
 		 * domain in order to have access to the correct cookies.
 		 */
 		getActionPHP: function() {
+			//var ret = '/~~' + Config.server.id + '/action.php';
 			var ret = '/~~' + Config.server.id + '/action.php';
 			if (Config.testclient) {
-				ret = 'http://' + Config.origindomain + ret;
+				//ret = 'http://' + Config.origindomain + ret;
+				ret = 'http://' + 'play.pokemonshowdown.com' + ret;
 			}
 			return (this.getActionPHP = function() {
 				return ret;
