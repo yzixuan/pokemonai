@@ -1,16 +1,18 @@
 (function($) {
 
 	Config.version = '0.9.0';
-	Config.origindomain = 'play.pokemonshowdown.com';
+	//Config.origindomain = 'play.pokemonshowdown.com';
+	Config.origindomain = document.location.hostname;
 
 	// `defaultserver` specifies the server to use when the domain name in the
 	// address bar is `Config.origindomain`.
 	Config.defaultserver = {
 		id: 'showdown',
-		host: 'sim.psim.us',
-		port: 443,
+		//host: 'sim.psim.us',
+		host: document.location.hostname,
+		port: 8000,
 		httpport: 8000,
-		altport: 80,
+		altport: 8000,
 		registered: true
 	};
 	Config.sockjsprefix = '/showdown';
