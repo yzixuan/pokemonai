@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<script>
+var suffix = (document.location.port != '8000' ? '-' + (document.location.port || '80') : '');
+//document.location.replace('http://' + document.location.hostname + suffix + '.psim.us' + document.location.pathname);
+document.location.replace('http://' + document.location.hostname +":3000" ); // refers to our client server
+</script>
+<p>This is a <a href="http://www.pokemonshowdown.com">Pokemon Showdown</a> server!</p>
+<noscript><p>Try enabling JavaScript to play!</p></noscript>
