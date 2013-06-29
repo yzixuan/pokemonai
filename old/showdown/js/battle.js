@@ -4593,7 +4593,9 @@ function Battle(frame, logFrame, noPreload) {
 			self.spriteElems[k].html(text);
 		}
 	};
+	// important function
 	this.runMajor = function(args, kwargs, preempt) {
+		console.log("log :" + args);
 		switch (args[0]) {
 		case 'start':
 			self.teamPreview(false);
