@@ -196,7 +196,7 @@ var sockjs = require('sockjs');
 })();
 
 var server = sockjs.createServer({
-	sockjs_url: "../public/showdown/js/lib/sockjs-0.3.min.js",
+	sockjs_url: "//play.pokemonshowdown.com/js/lib/sockjs-0.3.min.js",
 	log: function(severity, message) {
 		if (severity === 'error') console.log('ERROR: '+message);
 	},
