@@ -19,6 +19,10 @@ module.exports = {
     var user = {username: username, email: email, password: encryptPassword(password)};
     db.insertOne('users', user, callback);
   },
+
+  getSessionStore: function() {
+    return sessionStore;
+  },
   
   ensureAuthenticated: function (req, res, next) {
     if (req.session._id) {
