@@ -779,6 +779,11 @@ form.well {
     height:140px;
 }
 
+/* For avatar on profile page */
+#avatar {
+	max-height:140px;
+	max-width:140px;
+}
 
 /* For the sign-in on the right of the top bar */
 .signin-align {
