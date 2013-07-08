@@ -25,7 +25,7 @@
         <li><a href="/play"><img class="logo" src="/img/play.png"></a></li>
         <li><a href="/"><img class="logo" src="/img/logo.png"></a></li>      
         <li><a href="/war"><img class="logo" src="/img/war.png"></a></li>
-        <li><a id="logger" href="/login"><img class="logo" src="/img/login.png"></a></li>
+        <li><a id="logger" href="/loginPage"><img class="logo" src="/img/login.png"></a></li>
       </ul>
     </div> 
     </div>
@@ -37,16 +37,24 @@
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab1" data-toggle="tab">profile</a></li>
             <li><a href="#tab2" data-toggle="tab">battle log</a></li>
+            <li><a href="#tab3" data-toggle="tab">account settings</a></li>
           </ul>
           <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
             <div class="tab-pane active" id="tab1">
-			  <p><img src = "<%=avatar%>" alt="avatar"></p>
               <p>User ID: <%=username%></p>
               <p>Email: <%=email%></p>
               <p>Profile details to be inserted here...</p>
             </div>
             <div class="tab-pane" id="tab2">
               <p>Battle logs to be inserted here...</p>
+            </div>
+            <div class="tab-pane" id="tab3">
+            <form id="updateEmail-form" action="/updateEmail" method="post">
+                <h4>Change your email address</h4>
+                <p>Your current email address: <%=email%></p>
+                <p><input type="text" name="email" class="input-xlarge span8" autofocus placeholder="new email address"></p>
+                <p><button type="submit" class="btn btn-primary" id="update-email">Update</button></p>
+            </form>    
             </div>
           </div>
         </div>

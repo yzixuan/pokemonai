@@ -33,6 +33,10 @@ module.exports = {
     res.redirect('/loginPage');
   },
 
+  mailUpdate: function(id, email, callback) {
+    db.updateById('users', new ObjectID(id), {email: email}, callback);
+  },  
+
   getUserById: function(id, callback) {
     db.findOne('users', {_id: new ObjectID(id)}, callback);
   },

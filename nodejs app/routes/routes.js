@@ -98,5 +98,11 @@ module.exports = {
         res.redirect('/loginError');
     });       
     });
+  },
+
+  updateEmail: function(req, res) {
+    library.mailUpdate(req.session._id, req.body.email, function(err, user) {
+      res.redirect('/profile');
+  });
   }
 }
