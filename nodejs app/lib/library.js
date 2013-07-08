@@ -16,7 +16,9 @@ module.exports = {
   },
       
   createUser: function(username, email, password, callback) {
-    var user = {username: username, email: email, password: encryptPassword(password)};
+	// testing avatar insertion
+	var defaultAvatar = '/img/logo.png';
+    var user = {username: username, email: email, password: encryptPassword(password), avatar:defaultAvatar};
     db.insertOne('users', user, callback);
   },
 

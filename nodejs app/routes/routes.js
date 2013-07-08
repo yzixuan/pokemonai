@@ -67,7 +67,7 @@ module.exports = {
     library.getUserById(req.session._id, function(err, user) {
     var profile = [];
     if (user && user.profile) profile = user.profile;
-    res.render('profile', {profile:profile, username:user.username, email: user.email});
+    res.render('profile', {profile:profile, username:user.username, email: user.email, avatar: user.avatar});
   });
   },
   
