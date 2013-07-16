@@ -4219,6 +4219,11 @@ input[type="submit"].btn.btn-mini {
   border-color: #999999;
 }
 
+.profile {
+  *zoom: 1;
+  text-align: left;
+}
+
 .tabbable {
   *zoom: 1;
   text-align: center;

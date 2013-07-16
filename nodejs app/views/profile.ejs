@@ -52,29 +52,37 @@
           </ul>
           <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
             <div class="tab-pane active" id="tab1">
-			  <p><img src = "<%=avatar%>" alt="avatar" id="avatar"></p>
-              <p>User ID: <%=username%></p>
-              <p>Email: <%=email%></p>
-              <p>Profile details to be inserted here...</p>
+              <div class="row-fluid">
+              <div class="span3">
+  			        <p><img src = "<%=avatar%>" alt="avatar" id="avatar"></p>
+              </div>
+              <div class="profile">
+                <p>User ID: <%=username%></p>
+                <p>Email: <%=email%></p>
+                <p>Profile details to be inserted here...</p>
+              </div>  
+              </div>  
             </div>
             <div class="tab-pane" id="tab2">
               <p>Battle logs to be inserted here...</p>
             </div>
             <div class="tab-pane" id="tab3">
-				<form id="updateEmail-form" action="/updateEmail" method="post">
-					<h4>Change your email address</h4>
-					<p>Your current email address: <%=email%></p>
-					<p><input type="text" name="email" class="input-xlarge span8" autofocus placeholder="new email address"></p>
-					<p><button type="submit" class="btn btn-primary" id="update-email">Update</button></p>
-				</form>
-				<form id="updateAvatar-form" action="/updateAvatar" method="post">
-					<h4>Change your profile picture</h4>
-					<p>Your current profile picture:</p>
-					<p><img src = "<%=avatar%>" alt="avatar" id="avatar"></p>
-					<p>Choose another avatar:</p>
-					<select id = "avatarPick" name = "avatar"></select>
-					<p><button type="submit" class="btn btn-primary" id="update-avatar">Update</button></p>
-				</form>
+            <div class="profile">  
+      				<form id="updateEmail-form" action="/updateEmail" method="post">
+      					<h4>Change your email address</h4>
+      					<p>Your current email address: <%=email%></p>
+      					<p><input type="text" name="email" class="input-xlarge span8" autofocus placeholder="new email address"></p>
+      					<p><button type="submit" class="btn btn-primary" id="update-email">Update</button></p>
+      				</form>
+      				<form id="updateAvatar-form" action="/updateAvatar" method="post">
+      					<h4>Change your profile picture</h4>
+      					<p>Your current profile picture:</p>
+      					<p><img src = "<%=avatar%>" alt="avatar" id="avatar"></p>
+      					<p>Choose another avatar:</p>
+      					<select id = "avatarPick" name = "avatar"></select>
+      					<p><button type="submit" class="btn btn-primary" id="update-avatar">Update</button></p>
+      				</form>
+            </div>  
             </div>
           </div>
         </div>
