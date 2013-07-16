@@ -781,8 +781,8 @@ form.well {
 
 /* For avatar on profile page */
 #avatar {
-	max-height:140px;
-	max-width:140px;
+	max-height:150px;
+	max-width:150px;
 }
 
 /* For the sign-in on the right of the top bar */
