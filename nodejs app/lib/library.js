@@ -16,8 +16,7 @@ module.exports = {
   },
       
   createUser: function(username, email, password, callback) {
-	// testing avatar insertion
-	var defaultAvatar = '/img/logo.png';
+	var defaultAvatar = '/img/avatar/default.png';
     var user = {username: username, email: email, password: encryptPassword(password), avatar:defaultAvatar};
     db.insertOne('users', user, callback);
   },
@@ -36,6 +35,10 @@ module.exports = {
   mailUpdate: function(id, email, callback) {
     db.updateById('users', new ObjectID(id), {email: email}, callback);
   },  
+  
+  avatarUpdate: function(id, newAvatar, callback) {
+    db.updateById('users', new ObjectID(id), {avatar: "/img/avatar/"+newAvatar+".png"}, callback);
+  }, 
 
   getUserById: function(id, callback) {
     db.findOne('users', {_id: new ObjectID(id)}, callback);

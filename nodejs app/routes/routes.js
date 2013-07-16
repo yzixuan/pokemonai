@@ -1,4 +1,5 @@
 var library = require('../lib/library');
+var fs = require('fs');
 
 module.exports = {
 
@@ -67,7 +68,11 @@ module.exports = {
     library.getUserById(req.session._id, function(err, user) {
     var profile = [];
     if (user && user.profile) profile = user.profile;
-    res.render('profile', {profile:profile, username:user.username, email: user.email, avatar: user.avatar});
+ 
+	//gets all the filenames of the avatar pictures, then render profile page
+	fs.readdir('public\\img\\avatar', function(err, files){
+		res.render('profile', {profile:profile, username:user.username, email: user.email, avatar: user.avatar, pictures:files});
+	});
   });
   },
   
@@ -102,6 +107,12 @@ module.exports = {
 
   updateEmail: function(req, res) {
     library.mailUpdate(req.session._id, req.body.email, function(err, user) {
+      res.redirect('/profile');
+  });
+  },
+  
+  updateAvatar: function(req, res) {
+    library.avatarUpdate(req.session._id, req.body.avatar, function(err, user) {
       res.redirect('/profile');
   });
   }

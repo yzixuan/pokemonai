@@ -27,6 +27,7 @@ app.get('/playai', library.ensureAuthenticated, routes.playAi);
 app.get('/war', routes.getWar);
 app.get('/profile', library.ensureAuthenticated, routes.profile);
 app.post('/updateEmail', library.ensureAuthenticated, routes.updateEmail);
+app.post('/updateAvatar', library.ensureAuthenticated, routes.updateAvatar);
 app.get('/loginError', routes.loginError);
 app.post('/login', routes.login);
 app.post('/signup', routes.signup);
