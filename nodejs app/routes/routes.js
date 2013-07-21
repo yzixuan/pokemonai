@@ -71,7 +71,7 @@ module.exports = {
  
 	//gets all the filenames of the avatar pictures, then render profile page
 	fs.readdir('public\/img\/avatar', function(err, files){
-		res.render('profile', {profile:profile, username:user.username, email: user.email, avatar: user.avatar, pictures:files});
+		res.render('profile', {profile:profile, username:user.username, email:user.email, avatar:user.avatar, pictures:files, wins:user.wins, loses:user.loses});
 	});
   });
   },
