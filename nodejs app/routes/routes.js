@@ -39,7 +39,7 @@ module.exports = {
     library.getUserById(req.session._id, function(err, user) {
     var profile = [];
     if (user && user.profile) profile = user.profile;
-    res.render('playOthers', {username:user.username});
+    res.render('playothers', {username:user.username});
   });
   },
 
@@ -47,7 +47,7 @@ module.exports = {
     library.getUserById(req.session._id, function(err, user) {
     var profile = [];
     if (user && user.profile) profile = user.profile;
-    res.render('playAi', {username:user.username});
+    res.render('playai', {username:user.username});
   });
   },  
 
