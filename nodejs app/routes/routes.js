@@ -51,9 +51,9 @@ module.exports = {
   });
   },  
 
-  getWar: function(req, res) {
-    res.render('war');
-  },  
+  // getWar: function(req, res) {
+    // res.render('war');
+  // },  
   
   getUser: function(req, res) {
     library.getUser(req.params.username, function(err, user) {
@@ -138,6 +138,30 @@ module.exports = {
   },
   
   getLeaderboard: function(req, res){
-	library.getLeaderboard();
+	library.getUsers(function(err, users){
+		var ratio = [];
+		// Get win/loss ratios of all users
+		for(i = 0; i < users.length; i++){
+			ratio[i] = new Array(2);
+			ratio[i][0] = users[i].username;
+			if(!(users[i].wins > 0)) users[i].wins = 1;
+			if(!(users[i].losses > 0)) users[i].losses = 1;
+			ratio[i][1] = users[i].wins/users[i].losses;
+		}
+		
+		// Sort users by win/loss ratio
+		function ratioSort(user1, user2){
+			if (user1[1] > user2[1]) return 1;
+			else if (user2[1] > user1[1]) return -1;
+			else return 0;
+		}
+		ratio.sort(ratioSort);
+		ratio.reverse();
+		
+		//Display top 10 scores
+		ratio.length = 10;
+		
+		res.render('war', {leaderboard: ratio});
+	});
   }
 }

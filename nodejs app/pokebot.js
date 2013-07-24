@@ -24,7 +24,7 @@ app.get('/about', routes.getAbout);
 app.get('/play', library.ensureAuthenticated, routes.getPlay);
 app.get('/playothers', library.ensureAuthenticated, routes.playOthers);
 app.get('/playai', library.ensureAuthenticated, routes.playAi);
-app.get('/war', routes.getWar);
+app.get('/war', routes.getLeaderboard);
 app.get('/profile', library.ensureAuthenticated, routes.profile);
 app.post('/updateEmail', library.ensureAuthenticated, routes.updateEmail);
 app.post('/updateAvatar', library.ensureAuthenticated, routes.updateAvatar);

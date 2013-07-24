@@ -83,8 +83,11 @@ module.exports = {
 	});
   },
   
-	getLeaderboard: function(){
-		db.find('users', query, 5, callback);
+	// Get all users
+	getUsers: function(callback){
+		db.find('users', {}, 0, function(err, users){
+			if (callback) callback(err, users);
+		});
 	}
 }
 

@@ -13,6 +13,27 @@
   <script type="text/javascript" src="/bootstrap/js/bootstrap-modal.js"></script>
   <script type="text/javascript" src="/bootstrap/js/bootstrap-transition.js"></script>
   <script type="text/javascript" src="/js/client.js"></script>
+  <script>
+  // Display the leaderboard
+  	$(document).ready(function(){
+		var board = "<%=leaderboard%>";
+		console.log(board);
+		boardList = board.split(',');
+		console.log(boardList);
+		var html;
+		$.each(boardList, function(index, value){
+			if(index === 0 || index%2 === 0){
+				html = '<tr><td>'+value+'</td>'
+			}
+			else {
+				html = html+'<td>'+value+'</td></tr>';
+				console.log(html);
+				$(html).appendTo('#leaderboard');
+				html = '';
+			}
+		});
+	});
+  </script>
 </head>
 <body>
   <div class="container-fluid">
@@ -30,7 +51,12 @@
   </div>  
 	<div class = "navbar">
 		<div class = "tabbable">
-			Coming soon!
+			Top 10 Players
+			<table id = "leaderboard">
+				<tr>
+				<td>Name</td><td>Win/Loss Ratio</td>
+				</tr>
+			</table>
 		</div>  
 	</div>
 </body>
