@@ -96,6 +96,9 @@
 				this.trigger('login:noresponse');
 			} else {
 				app.send('/trn ' + name + ',0,' + assertion);
+				// Successful rename; get the name for the user from here
+				// Ask user of our app to return cookie so we can identify them
+				$.post('/setShowdownName', {name: name});
 			}
 		},
 		/**

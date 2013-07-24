@@ -8,6 +8,8 @@
  *
  * @license MIT license
  */
+ 
+var jQuery = require('jquery');
 
 const TIMEOUT_DEALLOCATE = 15*60*1000;
 const REPORT_USER_STATS_INTERVAL = 1000*60*10;
@@ -390,6 +392,9 @@ var BattleRoom = (function() {
 		this.id = roomid;
 		this.title = ""+p1.name+" vs. "+p2.name;
 		this.i = {};
+		
+		// Users appear here
+		console.log("rooms.js: " + p1.name+" vs. "+p2.name);
 
 		format = ''+(format||'');
 
@@ -438,22 +443,35 @@ var BattleRoom = (function() {
 		}
 	};
 	BattleRoom.prototype.win = function(winner) {
+		console.log("winner: " + winner);
 		if (this.rated) {
 			var winnerid = toId(winner);
+			console.log("winnerid: " + winnerid);
 			var rated = this.rated;
 			this.rated = false;
 			var p1score = 0.5;
 
+			// must update to work on AWS later
 			if (winnerid === rated.p1) {
 				p1score = 1;
+				jQuery.post('http://localhost:3000/setWin', {winner: rated.p1});
+				jQuery.post('http://localhost:3000/setLoss', {loser: rated.p2});
+				
 			} else if (winnerid === rated.p2) {
 				p1score = 0;
+				jQuery.post('http://localhost:3000/setWin', {winner: rated.p2});
+				jQuery.post('http://localhost:3000/setLoss', {loser: rated.p1});
+				
 			}
 
 			var p1 = rated.p1;
+			console.log("rated.p1: " + p1);
 			if (Users.getExact(rated.p1)) p1 = Users.getExact(rated.p1).name;
+			console.log("p1: " + p1);
 			var p2 = rated.p2;
+			console.log("rated.p2: " + p2);
 			if (Users.getExact(rated.p2)) p2 = Users.getExact(rated.p2).name;
+			console.log("p2: " + p2);
 
 			//update.updates.push('[DEBUG] uri: '+config.loginserver+'action.php?act=ladderupdate&serverid='+config.serverid+'&p1='+encodeURIComponent(p1)+'&p2='+encodeURIComponent(p2)+'&score='+p1score+'&format='+toId(rated.format)+'&servertoken=[token]');
 
@@ -898,6 +916,8 @@ var BattleRoom = (function() {
 		this.active = this.battle.active;
 		if (this.active) {
 			this.title = ""+this.battle.p1+" vs. "+this.battle.p2;
+			// User names are here
+			console.log("rooms js: p1: " + this.battle.p1 + " p2: " + this.battle.p2);
 			this.send('|title|'+this.title);
 		}
 		this.update();

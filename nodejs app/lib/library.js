@@ -18,8 +18,8 @@ module.exports = {
   createUser: function(username, email, password, callback) {
 	var defaultAvatar = '/img/avatar/default.png';
 	var currentWins = 0;
-	var currentLoses = 0;
-    var user = {username: username, email: email, password: encryptPassword(password), avatar:defaultAvatar, wins: currentWins, loses:currentLoses};
+	var currentLosses = 0;
+    var user = {username: username, email: email, password: encryptPassword(password), avatar:defaultAvatar, wins: currentWins, losses:currentLosses};
     db.insertOne('users', user, callback);
   },
 
@@ -48,7 +48,44 @@ module.exports = {
 
   getUser: function(username, callback) {
     db.findOne('users', {username: username}, callback);
-  }
+  },
+  
+  setShowdownUser: function(id, name, callback){
+	var idstring = id.toString();
+	callback = (callback || function() { });
+	db.updateById('users', new ObjectID(idstring), {showdownUser: name}, callback);
+  },
+  
+  // This is to update user win/loss counts when they conclude a battle
+  updateWinLoss: function(user, status, callback){
+	// Get the PokeApp user associated with winner/loser
+	db.findOne('users', {showdownUser: user}, function(err, user) {
+		if(status === 'win')
+		{
+			console.log("updating wins for " + user.username);
+			var newWins = user.wins + 1;
+			db.updateById('users', new ObjectID(user._id.toString()), {wins: newWins},function(err) {
+				console.log(err);
+			});
+		}
+		else if(status === 'loss')
+		{
+			console.log("updating losses for " + user.username);
+			var newLoss = user.losses + 1;
+			db.updateById('users', new ObjectID(user._id.toString()), {losses: newLoss}, function(err) {
+				console.log(err);
+			});
+		}
+		else {
+			console.log("Error: invalid win/loss status.");
+		}
+		if(callback) callback();
+	});
+  },
+  
+	getLeaderboard: function(){
+		db.find('users', query, 5, callback);
+	}
 }
 
 function encryptPassword(plainText) {

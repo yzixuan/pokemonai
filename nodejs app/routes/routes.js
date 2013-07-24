@@ -71,7 +71,7 @@ module.exports = {
  
 	//gets all the filenames of the avatar pictures, then render profile page
 	fs.readdir('public\/img\/avatar', function(err, files){
-		res.render('profile', {profile:profile, username:user.username, email:user.email, avatar:user.avatar, pictures:files, wins:user.wins, loses:user.loses});
+		res.render('profile', {profile:profile, username:user.username, email:user.email, avatar:user.avatar, pictures:files, wins:user.wins, losses:user.losses});
 	});
   });
   },
@@ -82,6 +82,8 @@ module.exports = {
         req.session._id = id;
         res.cookie('username', id.username, {username: id.username});
         res.cookie('password', id.password, {password: id.password});
+		// Clears associated showdown user on login to prevent people having duplicate showdown usernames.
+		library.setShowdownUser(req.session._id, 'null');
         res.redirect('/profile');
       }
       else
@@ -112,8 +114,30 @@ module.exports = {
   },
   
   updateAvatar: function(req, res) {
-    library.avatarUpdate(req.session._id, req.body.avatar, function(err, user) {
+    library.avatarUpdate(req.session._id, req.body, function(err, user) {
       res.redirect('/profile');
   });
+  },
+  
+  // Called from the showdown client.
+  setShowdownName: function(req, res) {
+	console.log("showdown user: " + req.body.name);
+    library.setShowdownUser(req.session._id, req.body.name);
+  },
+  
+  setWin: function(req, res) {
+	library.updateWinLoss(req.body.winner, 'win', function(){ 
+		res.end('200');
+	});
+  },
+  
+  setLoss: function(req, res) {
+	library.updateWinLoss(req.body.loser, 'loss', function(){ 
+		res.end('200');
+	});
+  },
+  
+  getLeaderboard: function(req, res){
+	library.getLeaderboard();
   }
 }

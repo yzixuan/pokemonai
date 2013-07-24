@@ -28,9 +28,13 @@ app.get('/war', routes.getWar);
 app.get('/profile', library.ensureAuthenticated, routes.profile);
 app.post('/updateEmail', library.ensureAuthenticated, routes.updateEmail);
 app.post('/updateAvatar', library.ensureAuthenticated, routes.updateAvatar);
+app.post('/getLeaderboard', routes.getLeaderboard);
 app.get('/loginError', routes.loginError);
 app.post('/login', routes.login);
 app.post('/signup', routes.signup);
+app.post('/setShowdownName', library.ensureAuthenticated, routes.setShowdownName);
+app.post('/setWin', routes.setWin);
+app.post('/setLoss', routes.setLoss);
 app.get('/logout', function(req, res){
   req.session.destroy();
   res.redirect('/');
