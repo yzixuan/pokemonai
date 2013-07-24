@@ -23,7 +23,8 @@
 		var html;
 		$.each(boardList, function(index, value){
 			if(index === 0 || index%2 === 0){
-				html = '<tr><td>'+value+'</td>'
+        rank = index/2+1;
+				html = '<tr><td>'+rank+'<td>'+value+'</td>'
 			}
 			else {
 				html = html+'<td>'+value+'</td></tr>';
@@ -53,12 +54,15 @@
 			<table class="table table-striped table-bordered" id = "leaderboard">
         <thead>
           <tr>
+            <th>Rank</th>
             <th>Name</th>
             <th>Win/Loss Ratio</th>
           </tr>
-        </thead>        
-				<tr>
-				</tr>
+        </thead>   
+        <tbody>     
+				  <tr>
+				  </tr>
+        </tbody>
 			</table>
 </body>
 </html>
