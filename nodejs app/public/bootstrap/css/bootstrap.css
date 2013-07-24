@@ -1995,14 +1995,15 @@ legend + .control-group {
 }
 
 table {
-  max-width: 100%;
+  max-width: 60%;
   background-color: transparent;
   border-collapse: collapse;
   border-spacing: 0;
+  margin: 0 auto !important;
 }
 
 .table {
-  width: 100%;
+  width: 60%;
   margin-bottom: 20px;
 }
 
@@ -2010,7 +2011,7 @@ table {
 .table td {
   padding: 8px;
   line-height: 20px;
-  text-align: left;
+  text-align: center;
   vertical-align: top;
   border-top: 1px solid #dddddd;
 }
@@ -2160,7 +2161,7 @@ table th[class*="span"],
 .table td.span1,
 .table th.span1 {
   float: none;
-  width: 44px;
+  width: 40px;
   margin-left: 0;
 }
 
