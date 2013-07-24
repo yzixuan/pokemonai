@@ -13,7 +13,16 @@ var db = new Db('pokebot'
 
 module.exports = {
   find: function(name, query, limit, callback) {
-    db.collection(name).find(query).sort({_id: -1}).limit(limit).toArray(callback);
+    if(limit != 0)
+		db.collection(name).find(query).sort({_id: -1}).limit(limit).toArray(callback);
+	else
+		db.collection(name).find(query).sort({_id: -1}).toArray(callback);
+  },
+  findReverse: function(name, query, limit, callback) {
+    if(limit != 0)
+		db.collection(name).find(query).sort({_id: 1}).limit(limit).toArray(callback);
+	else
+		db.collection(name).find(query).sort({_id: 1}).toArray(callback);
   },
   findOne: function(name, query, callback) {
     db.collection(name).findOne(query, callback);
