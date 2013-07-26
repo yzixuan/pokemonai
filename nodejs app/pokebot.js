@@ -36,8 +36,11 @@ app.post('/setShowdownName', library.ensureAuthenticated, routes.setShowdownName
 app.post('/setWin', routes.setWin);
 app.post('/setLoss', routes.setLoss);
 app.get('/logout', function(req, res){
-  req.session.destroy();
-  res.redirect('/');
+	// Clears associated showdown user on logout to prevent people having duplicate showdown usernames.
+	library.setShowdownUser(req.session._id, 'null');
+
+	req.session.destroy();
+	res.redirect('/');
 });
  
 db.open(function() {
