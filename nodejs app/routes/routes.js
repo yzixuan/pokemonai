@@ -114,7 +114,7 @@ module.exports = {
   },
   
   updateAvatar: function(req, res) {
-    library.avatarUpdate(req.session._id, req.body, function(err, user) {
+    library.avatarUpdate(req.session._id, req.body.avatar, function(err, user) {
       res.redirect('/profile');
   });
   },
