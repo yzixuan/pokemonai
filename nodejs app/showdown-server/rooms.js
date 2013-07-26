@@ -497,7 +497,7 @@ var BattleRoom = (function() {
 						return;
 					}
 					if (!data) {
-						self.addRaw('Ladder (probably) updated, but score could not be retrieved ('+error+').');
+						//self.addRaw('Ladder (probably) updated, but score could not be retrieved ('+error+').');
 						self.update();
 						// log the battle anyway
 						if (!Tools.getFormat(self.format).noLog) {
