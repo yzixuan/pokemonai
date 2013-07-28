@@ -389,6 +389,7 @@ var GlobalRoom = (function() {
 
 var BattleRoom = (function() {
 	function BattleRoom(roomid, format, p1, p2, parentid, rated) {
+		console.log("format: " + format);
 		this.id = roomid;
 		this.title = ""+p1.name+" vs. "+p2.name;
 		this.i = {};
@@ -403,6 +404,7 @@ var BattleRoom = (function() {
 		//console.log("NEW BATTLE");
 
 		var formatid = toId(format);
+		console.log(format);
 
 		if (rated && Tools.getFormat(formatid).rated) {
 			rated = {
@@ -454,12 +456,12 @@ var BattleRoom = (function() {
 			// must update to work on AWS later
 			if (winnerid === rated.p1) {
 				p1score = 1;
-				jQuery.post('http://localhost:3000/setWin', {winner: rated.p1});
+				jQuery.post('http://localhost:3000/setWin', {winner: rated.p1, formatName:this.format});
 				jQuery.post('http://localhost:3000/setLoss', {loser: rated.p2});
 				
 			} else if (winnerid === rated.p2) {
 				p1score = 0;
-				jQuery.post('http://localhost:3000/setWin', {winner: rated.p2});
+				jQuery.post('http://localhost:3000/setWin', {winner: rated.p2, formatName:this.format});
 				jQuery.post('http://localhost:3000/setLoss', {loser: rated.p1});
 				
 			}

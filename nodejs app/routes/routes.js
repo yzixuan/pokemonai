@@ -66,14 +66,16 @@ module.exports = {
   
   profile: function(req, res) {
     library.getUserById(req.session._id, function(err, user) {
-    var profile = [];
-    if (user && user.profile) profile = user.profile;
- 
-	//gets all the filenames of the avatar pictures, then render profile page
-	fs.readdir('public\/img\/avatar', function(err, files){
-		res.render('profile', {profile:profile, username:user.username, email:user.email, avatar:user.avatar, pictures:files, wins:user.wins, losses:user.losses});
+		var profile = [];
+		if (user && user.profile) profile = user.profile;
+		
+		library.getAchievements(user.username, function(err, achievement){
+			//gets all the filenames of the avatar pictures
+			fs.readdir('public\/img\/avatar', function(err, files){
+				res.render('profile', {profile:profile, username:user.username, email:user.email, avatar:user.avatar, pictures:files, wins:user.wins, losses:user.losses, ubers: achievement.ubers, ou:achievement.ou, uu:achievement.uu, nu:achievement.nu, lc:achievement.lc});
+			});		
+		});
 	});
-  });
   },
   
   login: function(req, res) {
@@ -92,18 +94,22 @@ module.exports = {
   },
   
   signup: function(req, res) {
+	// Create user
     library.createUser(req.body.username, req.body.email, req.body.password, function(err, user) {
-      console.log(user);
-    library.authenticate(req.body.username, req.body.password, function(err, id) {
-      if (id) {
-        req.session._id = id;
-        res.cookie('username', id.username, {username: id.username});
-        res.cookie('password', id.password, {password: id.password});
-        res.redirect('/profile');
-      }
-      else
-        res.redirect('/loginError');
-    });       
+		console.log(user);
+		// Create the user's achievements log.
+		library.createAchievement(req.body.username, function(err, user) {
+			library.authenticate(req.body.username, req.body.password, function(err, id) {
+			  if (id) {
+				req.session._id = id;
+				res.cookie('username', id.username, {username: id.username});
+				res.cookie('password', id.password, {password: id.password});
+				res.redirect('/profile');
+			  }
+			  else
+				res.redirect('/loginError');
+			});  
+		});   
     });
   },
 
@@ -126,7 +132,7 @@ module.exports = {
   },
   
   setWin: function(req, res) {
-	library.updateWinLoss(req.body.winner, 'win', function(){ 
+	library.updateWinLoss(req.body.winner, 'win', req.body.formatName, function(){ 
 		res.end('200');
 	});
   },
