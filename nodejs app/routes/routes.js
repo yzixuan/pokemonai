@@ -1,5 +1,6 @@
 var library = require('../lib/library');
 var fs = require('fs');
+var jquery = require("jquery")
 
 module.exports = {
 
@@ -169,5 +170,15 @@ module.exports = {
 		
 		res.render('war', {leaderboard: ratio});
 	});
+  },
+  ActionPHP: function(req, resp)
+  {
+		//decode request
+		var request = req.body.request;
+		//forward
+		jquery.get(request, function(data) {
+			resp.send(data); //forward data back
+		});
   }
+
 }

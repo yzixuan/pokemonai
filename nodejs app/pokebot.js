@@ -42,6 +42,7 @@ app.get('/logout', function(req, res){
 	req.session.destroy();
 	res.redirect('/');
 });
+app.post('/actionphp', routes.ActionPHP);
  
 db.open(function() {
   app.listen(3000);

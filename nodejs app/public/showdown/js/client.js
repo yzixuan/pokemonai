@@ -109,7 +109,22 @@
 		 *
 		 * See `finishRename` above for a list of events this can emit.
 		 */
-		rename: function(name) {
+		 rename: function(name) {
+			if (this.get('userid') !== toUserid(name)) {
+				var query = this.getActionPHP() + '?act=getassertion&userid=' +
+						encodeURIComponent(toUserid(name)) +
+						'&challengekeyid=' + encodeURIComponent(this.challengekeyid) +
+						'&challenge=' + encodeURIComponent(this.challenge);
+				var self = this;
+				
+				window.promise = $.post("/actionphp", {"request": query},function(data) {
+					self.finishRename(name, data);
+				});
+			} else {
+				app.send('/trn ' + name);
+			}
+		},
+		/*rename: function(name) {
 			if (this.get('userid') !== toUserid(name)) {
 				var query = this.getActionPHP() + '?act=getassertion&userid=' +
 						encodeURIComponent(toUserid(name)) +
@@ -123,7 +138,7 @@
 			} else {
 				app.send('/trn ' + name);
 			}
-		},
+		},*/
 		passwordRename: function(name, password) {
 			var self = this;
 			$.post(this.getActionPHP(), {
@@ -165,7 +180,17 @@
 						'&challengekeyid=' + encodeURIComponent(attrs.challengekeyid) +
 						'&challenge=' + encodeURIComponent(attrs.challenge);
 				var self = this;
-				$.get(query, Tools.safeJSON(function(data) {
+				/*$.get(query, Tools.safeJSON(function(data) {
+					if (!data.username) return;
+					if (data.loggedin) {
+						self.set('registered', {
+							username: data.username,
+							userid: toUserid(data.username)
+						});
+					}
+					self.finishRename(data.username, data.assertion);
+				}), 'text');*/
+				$.post("/actionphp",{request: query}, Tools.safeJSON(function(data) {
 					if (!data.username) return;
 					if (data.loggedin) {
 						self.set('registered', {
