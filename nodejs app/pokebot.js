@@ -3,8 +3,8 @@
 var db = require('./lib/db')
   , express = require('express')
   , library = require('./lib/library')
-  , var fs = require('fs')
-  , var path = require('path')
+  , fs = require('fs')
+  , path = require('path')
   , routes = require('./routes/routes.js');
 
 var app = express.createServer();
