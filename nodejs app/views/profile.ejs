@@ -15,16 +15,16 @@
   <script type="text/javascript" src="/bootstrap/js/bootstrap-tab.js"></script>
   <script type="text/javascript" src="/js/profile.js"></script>
   <script> 
-	user = "<%=username%>";
-	// Populate a list of avatars
-	$(document).ready(function(){
-		var picNames = "<%=pictures%>";
-		picNames = picNames.replace(/.png/g,"");
-		var picArray = picNames.split(',');
-		$.each(picArray, function(index, value){
-			$('#avatarPick').append('<option value="'+ value +'">'+ value +'</option>');
-		});
-	});
+  user = "<%=username%>";
+  // Populate a list of avatars
+  $(document).ready(function(){
+    var picNames = "<%=pictures%>";
+    picNames = picNames.replace(/.png/g,"");
+    var picArray = picNames.split(',');
+    $.each(picArray, function(index, value){
+      $('#avatarPick').append('<option value="'+ value +'">'+ value +'</option>');
+    });
+  });
   </script>
 </head>
 <body>
@@ -47,20 +47,22 @@
         <div class="tabbable" style="margin-bottom: 18px;">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab1" data-toggle="tab">profile</a></li>
-            <li><a href="#tab2" data-toggle="tab">battle log</a></li>
+            <li><a href="#tab2" data-toggle="tab">upload AI script</a></li>
             <li><a href="#tab3" data-toggle="tab">user achievements</a></li>
             <li><a href="#tab4" data-toggle="tab">account settings</a></li>
           </ul>
           <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
             <div class="tab-pane active" id="tab1">
-			  <p><img src = "<%=avatar%>" alt="avatar" id="avatar"></p>
+        <p><img src = "<%=avatar%>" alt="avatar" id="avatar"></p>
               <p>User ID: <%=username%></p>
               <p>Email: <%=email%></p>
               <p>Number of wins: <%=wins%></p>
-			  <p>Number of losses: <%=losses%></p>
+        <p>Number of losses: <%=losses%></p>
             </div>
             <div class="tab-pane" id="tab2">
-              <p>Battle logs to be inserted here...</p>
+              <h3>Upload your very own AI script here! (.js file only)</h3>
+              <form action="/submitFile" enctype="multipart/form-data" method="POST"><input type="file" name="upload_file"/>
+              <button type="submit" class="btn btn-primary" id="userfile" action="/profile">Submit</button>
             </div>
             <div class="tab-pane" id="tab3">
               <h4>Here's a list of achievements you can accumulate as you battle!</h4>
@@ -74,7 +76,7 @@
                   </tr>
                 </thead>
                 <tbody class="achievement-list">
-				   <tr>
+           <tr>
                     <td><img src = "/img/uber.png" id="avatar"></td>
                     <td>
                       <h4>Uber Victory</h4>
@@ -106,7 +108,7 @@
                     </td>
                     <td><%=nu%></td>
                   </tr>     
-				  <tr>
+          <tr>
                     <td><img src = "/img/lc.png" id="avatar"></td>
                     <td>
                       <h4>LC Victory</h4>
@@ -119,21 +121,21 @@
             </div>
             <div class="tab-pane" id="tab4">
             <div class="profile">  
-      				<form id="updateEmail-form" action="/updateEmail" method="post">
-      					<h4>Change your email address</h4>
-      					<p>Your current email address: <%=email%></p>
-      					<p><input type="text" name="email" class="input-xlarge span8" autofocus placeholder="new email address"></p>
-      					<p><button type="submit" class="btn btn-primary" id="update-email">Update</button></p>
-      				</form>
+              <form id="updateEmail-form" action="/updateEmail" method="post">
+                <h4>Change your email address</h4>
+                <p>Your current email address: <%=email%></p>
+                <p><input type="text" name="email" class="input-xlarge span8" autofocus placeholder="new email address"></p>
+                <p><button type="submit" class="btn btn-primary" id="update-email">Update</button></p>
+              </form>
               <br/>
-      				<form id="updateAvatar-form" action="/updateAvatar" method="post">
-      					<h4>Change your profile picture</h4>
-      					<p>Your current profile picture:</p>
-      					<p><img src = "<%=avatar%>" alt="avatar" id="avatar"></p>
-      					<p>Choose another avatar:</p>
-      					<select id = "avatarPick" name = "avatar"></select>
-      					<p><button type="submit" class="btn btn-primary" id="update-avatar">Update</button></p>
-      				</form>
+              <form id="updateAvatar-form" action="/updateAvatar" method="post">
+                <h4>Change your profile picture</h4>
+                <p>Your current profile picture:</p>
+                <p><img src = "<%=avatar%>" alt="avatar" id="avatar"></p>
+                <p>Choose another avatar:</p>
+                <select id = "avatarPick" name = "avatar"></select>
+                <p><button type="submit" class="btn btn-primary" id="update-avatar">Update</button></p>
+              </form>
             </div>  
             </div>
           </div>

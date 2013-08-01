@@ -3,11 +3,14 @@
 var db = require('./lib/db')
   , express = require('express')
   , library = require('./lib/library')
+  , var fs = require('fs')
+  , var path = require('path')
   , routes = require('./routes/routes.js');
 
 var app = express.createServer();
 app.configure(function () {
   app.use(express.bodyParser());
+  app.use(express.bodyParser({ keepExtensions: true, uploadDir: "uploads" }));   
   app.use(express.cookieParser());
   app.use(express.session({secret: 'secretpasswordforsessions'}));
   app.set('views', __dirname + '/views');
@@ -26,6 +29,7 @@ app.get('/playothers', library.ensureAuthenticated, routes.playOthers);
 app.get('/playai', library.ensureAuthenticated, routes.playAi);
 app.get('/war', routes.getLeaderboard);
 app.get('/profile', library.ensureAuthenticated, routes.profile);
+app.post('/submitFile', library.ensureAuthenticated, routes.submitFile);
 app.post('/updateEmail', library.ensureAuthenticated, routes.updateEmail);
 app.post('/updateAvatar', library.ensureAuthenticated, routes.updateAvatar);
 app.post('/getLeaderboard', routes.getLeaderboard);
