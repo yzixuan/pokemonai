@@ -126,30 +126,19 @@ module.exports = {
   });
   },
 
-  submitFile: (function(req, resp) {
-        var form = new formidable.IncomingForm();
-        var uploaded_file;
-        form.uploadDir = "c:\\temp\\"; 
-        form.on('file', function(field, file) {
-            uploaded_file = file.name;
-            fs.rename(file.path, path.dirname(file.path) + '\\' + file.name, function(err){
-                if (err) {
-                    console.error('rename failed' + err);
-                }            
-            });        });
-        form.on('progress', function(byteReceived, byteExpected) {
-            console.log('Uploaded: ' + Math.round(byteReceived/byteExpected * 100) + '%');
-        });
-        form.on('end', function() {
-            resp.writeHead(200, {'content-type': 'text/plain'});
-            resp.write("Uploaded file: " + uploaded_file);
-            resp.write("\n");
-            resp.end("Done");
-        });    
-        form.parse(req); 
-        return;
-    });
-},
+  submitFile: function(req, res) {
+    var temp_path = req.files.uploadfile.path;
+    var save_path = './public/uploads/' + req.files.uploadfile.name;
+     
+    fs.rename(temp_path, save_path, function(error){
+      if(error) throw error;
+      
+      fs.unlink(temp_path, function(){
+        if(error) throw error;
+        res.send("File uploaded to: " + save_path);
+      });
+  });
+  },  
   
   // Called from the showdown client.
   setShowdownName: function(req, res) {
