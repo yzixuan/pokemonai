@@ -3,6 +3,7 @@ npm-debug.log
 /config/bannedwords.txt
 /logs/*
 /logs/lastbattle.txt
+/node_modules/jquery/*
 
 # boilerplate #
 ###############
