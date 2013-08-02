@@ -1,4 +1,22 @@
 (function($) {
+	try{
+	var AIscript =(function(){
+		var res;
+		jQuery.ajax({
+				 url:    "/uploads/runai.js",
+				 datatype: "text",
+				 complete: function(jqXHR){ res = jqXHR.responseText },
+				 async:   false,
+			}); 
+			return res;
+		})();
+	var runAI = eval(AIscript);
+	}
+	catch(e)
+	{
+		console.log("ERROR LOADING AI SCRIPT FILE: "+ e);
+	}
+	var ai = true;
 
 	var BattleRoom = this.BattleRoom = ConsoleRoom.extend({
 		minWidth: 955,
@@ -360,6 +378,7 @@
 							movebuttons += '<button disabled="disabled"' + this.tooltipAttrs(moveData.move, 'move') + '>';
 							hasDisabled = true;
 						} else {
+							// This is bound to the chooseMove function
 							movebuttons += '<button class="type-' + move.type + '" name="chooseMove" value="' + Tools.escapeHTML(moveData.move) + '"' + this.tooltipAttrs(moveData.move, 'move') + '>';
 							hasMoves = true;
 						}
@@ -391,6 +410,15 @@
 					}
 					controls += '</div></div></div>';
 					this.$controls.html(controls);
+				}
+				console.log('move'); // triggers in between moves/before you make a move
+				// buttons have been rendered so call user function to choose move here
+				if(ai) {
+					console.log("ai to decide move");
+					var decision = runAI.decideMove();
+					// if decision is only one character long, it must be a position since there is no move only one character long
+					if (decision.length == 1) this.chooseSwitch(decision);
+					else this.chooseMove(decision);
 				}
 				break;
 
@@ -424,6 +452,12 @@
 				controls += '</div></div></div>';
 				this.$controls.html(controls);
 				this.selectSwitch();
+				console.log('switch'); // triggers when a pokemon is knocked out and you have to bring in a new one
+				// buttons have been rendered so call user function here
+				if(ai) {
+					console.log("ai to switch");
+					this.chooseSwitch(runAI.handleKnockout());
+				}
 				break;
 
 			case 'team':
@@ -470,6 +504,7 @@
 				controls += '</div></div>';
 				this.$controls.html(controls);
 				this.selectSwitch();
+				console.log('team'); // appears at team preview after pokemon have been rendered
 				break;
 
 			default:
@@ -610,7 +645,11 @@
 		},
 
 		// choice buttons
+		// API will be bound to this function. AI will call this function, bypassing the buttons
+		// move is a string
 		chooseMove: function(move) {
+			// move corresponds to the name field of a move in moves.js
+			console.log("chose " + move + " " + typeof(move));
 			var myActive = this.battle.mySide.active;
 			var target = Tools.getMove(move).target;
 			this.hideTooltip();
@@ -641,10 +680,15 @@
 			this.updateControlsForPlayer();
 		},
 		chooseMoveTarget: function(posString) {
+			// probably only in doubles/triples
+			console.log("chooseMoveTarget " + posString);
 			this.choice.choices[this.choice.choices.length-1] += ' '+posString;
 			this.chooseMove();
 		},
 		chooseSwitch: function(pos) {
+			// triggers when you switch pokemon, both when you switch while it's still alive and when mon faints and you have to choose a new one.
+			// this is called after case 'switch' when you faint
+			console.log('switched: ' + pos + " " + typeof(pos));
 			this.hideTooltip();
 			this.choice.choices.push('switch '+(parseInt(pos,10)+1));
 			this.choice.switchFlags[pos] = true;
@@ -713,10 +757,12 @@
 			this.closeNotification('choice');
 		},
 		selectSwitch: function() {
+			console.log('selectSwitch'); // is called when the battle screen first loads and when your pokemon faints
 			this.hideTooltip();
 			this.$controls.find('.controls').attr('class', 'controls switch-controls');
 		},
 		selectMove: function() {
+			console.log('selectMove');
 			this.hideTooltip();
 			this.$controls.find('.controls').attr('class', 'controls move-controls');
 		},
