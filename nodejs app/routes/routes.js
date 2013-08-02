@@ -135,7 +135,7 @@ module.exports = {
       
       fs.unlink(temp_path, function(){
         if(error) throw error;
-        res.send("File uploaded to: " + save_path);
+        res.redirect('/profile');
       });
   });
   },  
