@@ -32,25 +32,28 @@ module.exports = {
     library.getUserById(req.session._id, function(err, user) {
     var profile = [];
     if (user && user.profile) profile = user.profile;
-    res.render('play', {profile:profile, username:user.username});
+	fs.readdir('public\/uploads\/' + user.username, function(err, scriptFiles){
+		res.render('play', {profile:profile, username:user.username, scripts:scriptFiles});
+	});  
   });
   },
 
-  playOthers: function(req, res) {
+  fightBattle: function(req, res) {
     library.getUserById(req.session._id, function(err, user) {
-    var profile = [];
-    if (user && user.profile) profile = user.profile;
-    res.render('playothers', {username:user.username});
+		var profile = [];
+		var script = req.body.AIscript; //TODO: should make secure.
+		if (user && user.profile) profile = user.profile;
+		res.render('fight', {username:user.username, scriptfile: script});
   });
   },
 
-  playAi: function(req, res) {
+  /*playAi: function(req, res) {
     library.getUserById(req.session._id, function(err, user) {
     var profile = [];
     if (user && user.profile) profile = user.profile;
     res.render('playai', {username:user.username});
   });
-  },  
+  },*/  
 
   // getWar: function(req, res) {
     // res.render('war');
@@ -73,7 +76,9 @@ module.exports = {
 		library.getAchievements(user.username, function(err, achievement){
 			//gets all the filenames of the avatar pictures
 			fs.readdir('public\/img\/avatar', function(err, files){
-				res.render('profile', {profile:profile, username:user.username, email:user.email, avatar:user.avatar, pictures:files, wins:user.wins, losses:user.losses, ubers: achievement.ubers, ou:achievement.ou, uu:achievement.uu, nu:achievement.nu, lc:achievement.lc});
+				fs.readdir('public\/uploads\/' + user.username, function(err, scriptFiles){
+					res.render('profile', {profile:profile, username:user.username, email:user.email, avatar:user.avatar, pictures:files, scripts: scriptFiles, wins:user.wins, losses:user.losses, ubers: achievement.ubers, ou:achievement.ou, uu:achievement.uu, nu:achievement.nu, lc:achievement.lc});
+				});
 			});		
 		});
 	});

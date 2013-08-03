@@ -3,7 +3,7 @@
 	var AIscript =(function(){
 		var res;
 		jQuery.ajax({
-				 url:    "/uploads/runai.js",
+				 url:    "/uploads/"+username+"/"+scriptURL,
 				 datatype: "text",
 				 complete: function(jqXHR){ res = jqXHR.responseText },
 				 async:   false,
@@ -16,7 +16,6 @@
 	{
 		console.log("ERROR LOADING AI SCRIPT FILE: "+ e);
 	}
-	var ai = true;
 
 	var BattleRoom = this.BattleRoom = ConsoleRoom.extend({
 		minWidth: 955,

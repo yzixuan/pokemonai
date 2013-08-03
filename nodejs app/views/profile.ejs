@@ -24,6 +24,13 @@
     $.each(picArray, function(index, value){
       $('#avatarPick').append('<option value="'+ value +'">'+ value +'</option>');
     });
+	
+	//Populate a list of scripts
+	var scriptNames = "<%=scripts%>";
+    var scriptArray = scriptNames.split(',');
+    $.each(scriptArray, function(index, value){
+      $('#scriptView').append('<li value="'+ value +'">'+ value +'</li>');
+    });
   });
   </script>
 </head>
@@ -60,9 +67,11 @@
         <p>Number of losses: <%=losses%></p>
             </div>
             <div class="tab-pane" id="tab2">
-              <h3>Upload your very own AI script here! (.js file only)</h3>
+              <h3>Upload your very own AI script here! (.js files only)</h3>
               <form action="/submitFile" enctype="multipart/form-data" method="POST"><input type="file" name="uploadfile"/>
-              <button type="submit" class="btn btn-primary" id="userfile" action="/profile">Submit</button>
+              <button type="submit" class="btn btn-primary" id="userfile" action="/profile">Submit</button><br><br>
+			  <p>Scripts you have uploaded:</p>
+			  <ol id = "scriptView" name = "scripts"></ol>
             </div>
             <div class="tab-pane" id="tab3">
               <h4>Here's a list of achievements you can accumulate as you battle!</h4>

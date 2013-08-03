@@ -13,6 +13,16 @@
   <script type="text/javascript" src="/bootstrap/js/bootstrap-modal.js"></script>
   <script type="text/javascript" src="/bootstrap/js/bootstrap-transition.js"></script>
   <script type="text/javascript" src="/js/client.js"></script>
+  <script>
+    $(document).ready(function(){
+	//Populate a list of scripts
+	var scriptNames = "<%=scripts%>";
+    var scriptArray = scriptNames.split(',');
+    $.each(scriptArray, function(index, value){
+      $('#AIpick').append('<option value="'+ value +'">'+ value +'</option>');
+    });
+  });
+  </script>
 </head>
 <body>
   <div class="container-fluid">
@@ -31,8 +41,13 @@
     <div class = "navbar">
     <div class = "tabbable">
     <ul class = "nav nav-tabs">
-    <li><a href="/playothers"><img class="playbtn" src="/img/bar2.png"></a></li><br>
-      <li><a href="/playai"><img class="playbtn" src="/img/bar1.png"></a></li>
+    <li><a href="/fight"><img class="playbtn" src="/img/bar2.png"></a></li><br>
+    <li><img class="playbtn" src="/img/bar3.png"></a></li>
+	<form id="selectAI-form" action="/fight" method="post">
+		<p>Select the AI to use: </p>
+		<select id = "AIpick" name = "AIscript"></select>
+		<p><button type="submit" class="btn btn-primary" id="submitAI">Submit</button></p>
+	</form>	
     </ul> 
     </div>  
     </div>

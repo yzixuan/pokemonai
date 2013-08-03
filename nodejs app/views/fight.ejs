@@ -2,13 +2,18 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title> Pokemon AI </title>
+	<title> It's time to duel! </title>
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	  <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
 	  <link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 	  <link href="/css/playpage.css" rel="stylesheet">
 	  <script type="text/javascript" src="/js/jquery.js"></script>
-	
+	  <script>
+		//this configures the AI.
+		var username = "<%=username%>";
+		var scriptURL = "<%=scriptfile%>";
+		var ai = (scriptURL!=="undefined")? true:false;
+	  </script>
 	  <script type="text/javascript">
 		//<![CDATA[
 		window.__CF=window.__CF||{};window.__CF.AJS={"abetterbrowser":{"ie":"6"}};
