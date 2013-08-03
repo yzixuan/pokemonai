@@ -504,6 +504,9 @@
 				this.$controls.html(controls);
 				this.selectSwitch();
 				console.log('team'); // appears at team preview after pokemon have been rendered
+				if(ai){
+					this.chooseTeamPreview(runAI.teamPreviewChoice());
+				}
 				break;
 
 			default:
@@ -714,6 +717,7 @@
 			this.updateControlsForPlayer();
 		},
 		chooseTeamPreview: function(pos) {
+			console.log(pos + " " + typeof(pos));
 			pos = parseInt(pos,10);
 			this.hideTooltip();
 			if (this.choice.count) {
@@ -738,6 +742,7 @@
 
 			this.choice = {waiting: true};
 			this.updateControlsForPlayer();
+			console.log('chooseTeamPreview');
 		},
 		undoChoice: function(pos) {
 			this.send('/undo');
