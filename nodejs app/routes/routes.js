@@ -127,17 +127,40 @@ module.exports = {
   },
 
   submitFile: function(req, res) {
-    var temp_path = req.files.uploadfile.path;
-    var save_path = './public/uploads/' + req.files.uploadfile.name;
-     
-    fs.rename(temp_path, save_path, function(error){
-      if(error) throw error;
-      
-      fs.unlink(temp_path, function(){
-        if(error) throw error;
-        res.redirect('/profile');
-      });
-  });
+	// get user for directory name
+    library.getUserById(req.session._id, function(err, user) {
+	
+		var temp_path = req.files.uploadfile.path;
+		
+		// Check if the user's folder exists; if it doesn't, create it.
+		fs.exists('./public/uploads/' + user.username, function(exists){
+			if(!exists){ 
+				fs.mkdir('./public/uploads/' + user.username, function(err){
+					var save_path = './public/uploads/' + user.username + '/' + req.files.uploadfile.name;
+					
+					fs.rename(temp_path, save_path, function(error){
+					  if(error) throw error;
+					  
+					  fs.unlink(temp_path, function(){
+						if(error) throw error;
+						res.redirect('/profile');
+					  });
+					});
+				});
+			}
+			else {
+				var save_path = './public/uploads/' + user.username + '/' + req.files.uploadfile.name;
+				fs.rename(temp_path, save_path, function(error){
+				  if(error) throw error;
+				  
+				  fs.unlink(temp_path, function(){
+					if(error) throw error;
+					res.redirect('/profile');
+				  });
+				});
+			}	
+		});
+	});
   },  
   
   // Called from the showdown client.
