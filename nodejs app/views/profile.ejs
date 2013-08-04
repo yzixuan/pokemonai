@@ -48,7 +48,7 @@
     </div> 
     </div>
     <div class="row">
-      <div class="offset4 span8">
+      <div class="offset3 span8">
         <h3>Welcome to your profile</h3>
         <p>Here you can manage your account and view your battle logs.</p>
         <div class="tabbable" style="margin-bottom: 18px;">
@@ -66,16 +66,19 @@
               <p>Number of wins: <%=wins%></p>
         <p>Number of losses: <%=losses%></p>
             </div>
-            <div class="tab-pane" id="tab2">
+            <div class="tab-pane" id="tab2" align="left">
               <h3>Upload your very own AI script here! (.js files only)</h3>
               <form action="/submitFile" enctype="multipart/form-data" method="POST"><input type="file" name="uploadfile"/>
               <button type="submit" class="btn btn-primary" id="userfile" action="/profile">Submit</button><br><br>
-			  <p>Scripts you have uploaded:</p>
-			  <ol id = "scriptView" name = "scripts"></ol>
-			  <p>Explanation:</p>
-			  <p>Here we provide an API to simplify the process of writing a Pokemon AI (for Pokemon Showdown). The main idea is that we provide some functions you can call in your scripts to get information, and you write some (specified) functions that we will call at the appropriate information. This leaves you free to concentrate on battle strategy rather than worrying about how to interface with the Pokemon Showdown code.</p>
-			  <p>Download the following script template to get started!</p>
-			  <a href="/AI/empty.js">Link here (right-click and choose Save Target As)</a>
+      			  <h4 align="left">Your Scripts:</h4>
+      			  <ol class="table table-striped table-bordered table-condensed" id = "scriptView" name = "scripts"></ol>
+              </br>
+      			  <h4>Explanation:</h4>
+      			  <p>Here we provide an API to simplify the process of writing a Pokemon AI (for Pokemon Showdown). The main idea is that we provide some functions you can call in your scripts to get information, and you write some (specified) functions that we will call at the appropriate information. This leaves you free to concentrate on battle strategy rather than worrying about how to interface with the Pokemon Showdown code.</p>
+      			  <p>Download the following script template to get started!
+      			  
+            </p>
+            <h4>(right click and save as) <button class="btn"><a href="/AI/empty.js">empty.js</a></button></h4>
             </div>
             <div class="tab-pane" id="tab3">
               <h4>Here's a list of achievements you can accumulate as you battle!</h4>
