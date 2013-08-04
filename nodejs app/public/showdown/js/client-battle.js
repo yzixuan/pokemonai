@@ -1,3 +1,5 @@
+var x;
+var y;
 (function($) {
 	try{
 	var AIscript =(function(){
@@ -16,6 +18,9 @@
 	{
 		console.log("ERROR LOADING AI SCRIPT FILE: "+ e);
 	}
+	
+	var initCalled = false;
+	var API = new api();
 
 	var BattleRoom = this.BattleRoom = ConsoleRoom.extend({
 		minWidth: 955,
@@ -237,6 +242,13 @@
 				act = this.request.requestType;
 				if (this.request.side) {
 					switchables = this.battle.mySide.pokemon;
+					
+					if(ai) API.setOwnTeam(switchables);
+					
+					x = switchables;
+					for(i in switchables){
+						console.log("switchables: " + switchables[i].name);
+					}
 				}
 			}
 
@@ -265,6 +277,7 @@
 						}
 					}
 					var pos = this.choice.choices.length - (type === 'movetarget'?1:0);
+					console.log("pos :" + pos + " " + typeof(pos));
 
 					// hp bar
 					var hpbar = '';
@@ -280,6 +293,7 @@
 					var active = this.request;
 					if (active.active) active = active.active[pos];
 					var moves = active.moves;
+					y = active;
 					var trapped = active.trapped;
 					this.finalDecision = active.maybeTrapped || false;
 					if (this.finalDecision) {
@@ -373,6 +387,9 @@
 						if (move.id === 'Struggle' || move.id === 'Recharge') pp = '&ndash;';
 						if (move.id === 'Recharge') move.type = '&ndash;';
 						if (name.substr(0, 12) === 'Hidden Power') name = 'Hidden Power';
+						
+						console.log("move name: " + name);
+						
 						if (moveData.disabled) {
 							movebuttons += '<button disabled="disabled"' + this.tooltipAttrs(moveData.move, 'move') + '>';
 							hasDisabled = true;
@@ -409,16 +426,35 @@
 					}
 					controls += '</div></div></div>';
 					this.$controls.html(controls);
+					
+					console.log('move'); // triggers in between moves/before you make a move
+					// buttons have been rendered so call user function to choose move here
+					if(ai) {
+						console.log("ai to decide move");
+						if(!initCalled){
+							runAI.init(API);
+							initCalled = true;
+						}
+						var decision = runAI.decideMove(API);
+						// If decision is only one character long, it must be a position since there is no move only one character long.
+						if (decision.length == 1) {
+							this.chooseSwitch(decision);
+						}
+						else {
+							// Format the move string correctly.
+							for(i in moves) {
+								if(moves[i].id == decision) {
+									console.log("unformatted decision: " + decision);
+									decision = moves[i].move.toString();
+									console.log("formatted decision: " + decision);
+									break;
+								}
+							}
+							this.chooseMove(decision);
+						}
+					}
 				}
-				console.log('move'); // triggers in between moves/before you make a move
-				// buttons have been rendered so call user function to choose move here
-				if(ai) {
-					console.log("ai to decide move");
-					var decision = runAI.decideMove();
-					// if decision is only one character long, it must be a position since there is no move only one character long
-					if (decision.length == 1) this.chooseSwitch(decision);
-					else this.chooseMove(decision);
-				}
+
 				break;
 
 			case 'switch':
@@ -455,7 +491,7 @@
 				// buttons have been rendered so call user function here
 				if(ai) {
 					console.log("ai to switch");
-					this.chooseSwitch(runAI.handleKnockout());
+					this.chooseSwitch(runAI.handleKnockout(API));
 				}
 				break;
 
@@ -505,7 +541,9 @@
 				this.selectSwitch();
 				console.log('team'); // appears at team preview after pokemon have been rendered
 				if(ai){
-					this.chooseTeamPreview(runAI.teamPreviewChoice());
+					runAI.init(API);
+					initCalled = true;
+					this.chooseTeamPreview(runAI.teamPreviewChoice(API));
 				}
 				break;
 
