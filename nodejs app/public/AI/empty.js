@@ -32,9 +32,9 @@
 })()
 
 /*
- * Below is a list of fields that you can access in the API object that is passed into each function.
- * 1) API.getOwnTeam: returns an array of JSON objects. Each JSON object is a Pokemon on your team.
-	  The following are fields that can be accessed:
+ * Below is a list of fields and functions that you can access in the API object that is passed into each function.
+ * 1) API.getOwnTeam(): returns an array of JSON objects. Each JSON object is a Pokemon on your team.
+	  The following are object fields that can be accessed:
 		atk
 		def
 		spa

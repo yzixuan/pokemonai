@@ -1,8 +1,5 @@
 //pokebot ai api:
-// Constructor to be called by client-battle
 // Make all variables global and private which can only be accessed by GET functions.
-
- // put this in client-battle
 
 // Constructor
 function api(){
