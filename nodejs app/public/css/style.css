@@ -775,6 +775,11 @@ form.well {
     height:140px;
 }
 
+/* For the leaderboard banner */
+.banner {
+    height:200px;
+}
+
 .playbtn {
     height:140px;
 }
